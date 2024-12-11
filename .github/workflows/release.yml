@@ -23,8 +23,8 @@ jobs:
 
       - name: Create ISO from from Repository
         run: |
-          dd if=/dev/zero of=${{ github.repository }}.iso bs=512 count=200000
-          mkisofs -o ${{ github.repository }}.iso src/
+          dd if=/dev/zero of=${{ github.event.repository.name }}.iso bs=512 count=200000
+          mkisofs -o ${{ github.event.repository.name }}.iso src/
 
       - name: Create Release
         env:
@@ -34,4 +34,4 @@ jobs:
           gh release create "$tag" \
             --title "$tag" \
             --notes "Release $tag" \
-            ${{ github.repository }}.iso
+            ${{ github.event.repository.name }}.iso
